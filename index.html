@@ -2275,6 +2275,220 @@
         </div>
     </div>
 
+    <!-- Edit Medicine Modal (for Inventory) -->
+    <div class="modal" id="editMedicineModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Edit Medicine Details</h3>
+                <button class="close modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="editMedicineForm">
+                    <input type="hidden" id="editMedicineId">
+                    
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="editMedicineName">Medicine Name *</label>
+                                <input type="text" id="editMedicineName" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="editGenericName">Generic Name</label>
+                                <input type="text" id="editGenericName" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="editMedicineType">Type</label>
+                                <select id="editMedicineType" class="form-control">
+                                    <option value="tablet">Tablet</option>
+                                    <option value="capsule">Capsule</option>
+                                    <option value="syrup">Syrup</option>
+                                    <option value="suspension">Suspension</option>
+                                    <option value="drop">Drop</option>
+                                    <option value="injection">Injection</option>
+                                    <option value="cream">Cream</option>
+                                    <option value="ointment">Ointment</option>
+                                    <option value="gel">Gel</option>
+                                    <option value="powder">Powder</option>
+                                    <option value="inhaler">Inhaler</option>
+                                    <option value="lotion">Lotion</option>
+                                    <option value="solution">Solution</option>
+                                    <option value="spray">Spray</option>
+                                    <option value="suppository">Suppository</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="editMedicinePower">Power/Strength</label>
+                                <input type="text" id="editMedicinePower" class="form-control" placeholder="e.g., 500mg, 10mg/5ml">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="editCompanyName">Company Name</label>
+                                <input type="text" id="editCompanyName" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="editStock">Stock (pieces) *</label>
+                                <input type="number" id="editStock" class="form-control" min="0" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="editBoxPrice">Box Price (৳) *</label>
+                                <input type="number" id="editBoxPrice" class="form-control" step="0.01" min="0" required>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="editPiecePrice">Piece Price (৳) *</label>
+                                <input type="number" id="editPiecePrice" class="form-control" step="0.01" min="0" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="editStripsPerBox">Strips per Box</label>
+                                <input type="number" id="editStripsPerBox" class="form-control" min="1" value="10">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="editPiecesPerStrip">Pieces per Strip</label>
+                                <input type="number" id="editPiecesPerStrip" class="form-control" min="1" value="10">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="editExpiryDate">Expiry Date *</label>
+                                <input type="date" id="editExpiryDate" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="editStatus">Status</label>
+                                <select id="editStatus" class="form-control">
+                                    <option value="Available">Available</option>
+                                    <option value="Low Stock">Low Stock</option>
+                                    <option value="Out of Stock">Out of Stock</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary modal-close">Cancel</button>
+                <button class="btn btn-primary" id="saveMedicineChanges">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Return Medicine Modal -->
+    <div class="modal" id="editReturnModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Edit Expired Medicine Details</h3>
+                <button class="close modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="editReturnForm">
+                    <input type="hidden" id="editReturnId">
+                    
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="editReturnMedicineName">Medicine Name *</label>
+                                <input type="text" id="editReturnMedicineName" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="editReturnGenericName">Generic Name</label>
+                                <input type="text" id="editReturnGenericName" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="editReturnType">Type</label>
+                                <select id="editReturnType" class="form-control">
+                                    <option value="tablet">Tablet</option>
+                                    <option value="capsule">Capsule</option>
+                                    <option value="syrup">Syrup</option>
+                                    <option value="suspension">Suspension</option>
+                                    <option value="drop">Drop</option>
+                                    <option value="injection">Injection</option>
+                                    <option value="cream">Cream</option>
+                                    <option value="ointment">Ointment</option>
+                                    <option value="gel">Gel</option>
+                                    <option value="powder">Powder</option>
+                                    <option value="inhaler">Inhaler</option>
+                                    <option value="lotion">Lotion</option>
+                                    <option value="solution">Solution</option>
+                                    <option value="spray">Spray</option>
+                                    <option value="suppository">Suppository</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="editReturnCompany">Company Name</label>
+                                <input type="text" id="editReturnCompany" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="editReturnStock">Stock (pieces) *</label>
+                                <input type="number" id="editReturnStock" class="form-control" min="0" required>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="editReturnPrice">Price per Piece (৳) *</label>
+                                <input type="number" id="editReturnPrice" class="form-control" step="0.01" min="0" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editReturnExpiry">Expiry Date *</label>
+                        <input type="date" id="editReturnExpiry" class="form-control" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary modal-close">Cancel</button>
+                <button class="btn btn-primary" id="saveReturnChanges">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         // PWA Installation
         let deferredPrompt;
@@ -3347,8 +3561,9 @@
                     </td>
                     <td><span class="badge ${getStatusClass(expired ? 'Expired' : med.status)}">${expired ? 'Expired' : med.status}</span></td>
                     <td>
-                        <button class="action-btn sell sell-btn"><i class="fas fa-cash-register"></i></button>
-                        <button class="action-btn delete"><i class="fas fa-trash"></i></button>
+                        <button class="action-btn edit edit-btn" title="Edit Medicine"><i class="fas fa-edit"></i></button>
+                        <button class="action-btn sell sell-btn" title="Sell Medicine"><i class="fas fa-cash-register"></i></button>
+                        <button class="action-btn delete" title="Delete Medicine"><i class="fas fa-trash"></i></button>
                     </td>
                 `;
                 tbody.appendChild(row);
@@ -3387,8 +3602,9 @@
                 </td>
                 <td><span class="badge ${getStatusClass(expired ? 'Expired' : medicine.status)}">${expired ? 'Expired' : medicine.status}</span></td>
                 <td>
-                    <button class="action-btn sell sell-btn"><i class="fas fa-cash-register"></i></button>
-                    <button class="action-btn delete"><i class="fas fa-trash"></i></button>
+                    <button class="action-btn edit edit-btn" title="Edit Medicine"><i class="fas fa-edit"></i></button>
+                    <button class="action-btn sell sell-btn" title="Sell Medicine"><i class="fas fa-cash-register"></i></button>
+                    <button class="action-btn delete" title="Delete Medicine"><i class="fas fa-trash"></i></button>
                 </td>
             `;
             tbody.appendChild(row);
@@ -3589,7 +3805,10 @@
                         <td style="color: var(--danger); font-weight: bold;">${daysExpired} days</td>
                         <td style="color: var(--danger); font-weight: bold;">${formatCurrency(med.stock * med.price)}</td>
                         <td>
-                            <button class="btn btn-danger btn-sm remove-return" data-id="${med.id}">
+                            <button class="btn btn-primary btn-sm edit-return" data-id="${med.id}" title="Edit Medicine">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button class="btn btn-danger btn-sm remove-return" data-id="${med.id}" title="Remove from Returns">
                                 <i class="fas fa-trash"></i> Remove
                             </button>
                         </td>
@@ -5036,6 +5255,200 @@
         } else {
             console.error('Failed to load comprehensive medicine database');
         }
+
+        // ========== EDIT FUNCTIONALITY ==========
+
+        // Event listener for edit buttons in inventory table
+        document.getElementById('inventoryTable').addEventListener('click', function(e) {
+            if (e.target.classList.contains('edit-btn') || e.target.closest('.edit-btn')) {
+                e.preventDefault();
+                const row = e.target.closest('tr');
+                const medicineId = row.dataset.id;
+                openEditMedicineModal(medicineId);
+            }
+        });
+
+        // Event listener for edit buttons in returns table
+        document.getElementById('returnsTable').addEventListener('click', function(e) {
+            if (e.target.classList.contains('edit-return') || e.target.closest('.edit-return')) {
+                e.preventDefault();
+                const button = e.target.closest('.edit-return');
+                const medicineId = button.dataset.id;
+                openEditReturnModal(medicineId);
+            }
+        });
+
+        // Function to open edit medicine modal (for inventory)
+        function openEditMedicineModal(medicineId) {
+            const medicine = medicines.find(med => med.id == medicineId);
+            if (!medicine) {
+                showToast('Medicine not found!', 'error');
+                return;
+            }
+
+            // Populate the edit form with current medicine data
+            document.getElementById('editMedicineId').value = medicine.id;
+            document.getElementById('editMedicineName').value = medicine.name;
+            document.getElementById('editGenericName').value = medicine.generic_name || '';
+            document.getElementById('editMedicineType').value = medicine.type;
+            document.getElementById('editMedicinePower').value = medicine.power || '';
+            document.getElementById('editCompanyName').value = medicine.company || '';
+            document.getElementById('editStock').value = medicine.stock;
+            document.getElementById('editBoxPrice').value = medicine.boxPrice;
+            document.getElementById('editPiecePrice').value = medicine.price;
+            document.getElementById('editStripsPerBox').value = medicine.stripsPerBox || 10;
+            document.getElementById('editPiecesPerStrip').value = medicine.piecesPerStrip || 10;
+            document.getElementById('editExpiryDate').value = medicine.expiry;
+            document.getElementById('editStatus').value = medicine.status || 'Available';
+
+            // Show the modal
+            document.getElementById('editMedicineModal').classList.add('show');
+        }
+
+        // Function to open edit return modal (for returns)
+        function openEditReturnModal(medicineId) {
+            const medicine = medicines.find(med => med.id == medicineId);
+            if (!medicine) {
+                showToast('Medicine not found!', 'error');
+                return;
+            }
+
+            // Populate the edit form with current medicine data
+            document.getElementById('editReturnId').value = medicine.id;
+            document.getElementById('editReturnMedicineName').value = medicine.name;
+            document.getElementById('editReturnGenericName').value = medicine.generic_name || '';
+            document.getElementById('editReturnType').value = medicine.type;
+            document.getElementById('editReturnCompany').value = medicine.company || '';
+            document.getElementById('editReturnStock').value = medicine.stock;
+            document.getElementById('editReturnPrice').value = medicine.price;
+            document.getElementById('editReturnExpiry').value = medicine.expiry;
+
+            // Show the modal
+            document.getElementById('editReturnModal').classList.add('show');
+        }
+
+        // Save medicine changes (inventory)
+        document.getElementById('saveMedicineChanges').addEventListener('click', function() {
+            const medicineId = document.getElementById('editMedicineId').value;
+            const medicineIndex = medicines.findIndex(med => med.id == medicineId);
+            
+            if (medicineIndex === -1) {
+                showToast('Medicine not found!', 'error');
+                return;
+            }
+
+            // Validate required fields
+            const name = document.getElementById('editMedicineName').value.trim();
+            const stock = parseInt(document.getElementById('editStock').value);
+            const boxPrice = parseFloat(document.getElementById('editBoxPrice').value);
+            const piecePrice = parseFloat(document.getElementById('editPiecePrice').value);
+            const expiry = document.getElementById('editExpiryDate').value;
+
+            if (!name || stock < 0 || boxPrice < 0 || piecePrice < 0 || !expiry) {
+                showToast('Please fill in all required fields with valid values!', 'error');
+                return;
+            }
+
+            // Update the medicine object
+            medicines[medicineIndex] = {
+                ...medicines[medicineIndex],
+                name: name,
+                generic_name: document.getElementById('editGenericName').value.trim(),
+                type: document.getElementById('editMedicineType').value,
+                power: document.getElementById('editMedicinePower').value.trim(),
+                company: document.getElementById('editCompanyName').value.trim(),
+                stock: stock,
+                boxPrice: boxPrice,
+                price: piecePrice,
+                stripsPerBox: parseInt(document.getElementById('editStripsPerBox').value) || 10,
+                piecesPerStrip: parseInt(document.getElementById('editPiecesPerStrip').value) || 10,
+                expiry: expiry,
+                status: document.getElementById('editStatus').value
+            };
+
+            // Save to localStorage
+            saveAllData();
+
+            // Close modal
+            document.getElementById('editMedicineModal').classList.remove('show');
+
+            // Refresh tables and dashboard
+            populateInventoryTable();
+            populateRecentInventory();
+            updateDashboardStats();
+            
+            showToast('Medicine details updated successfully!', 'success');
+        });
+
+        // Save return changes (returns)
+        document.getElementById('saveReturnChanges').addEventListener('click', function() {
+            const medicineId = document.getElementById('editReturnId').value;
+            const medicineIndex = medicines.findIndex(med => med.id == medicineId);
+            
+            if (medicineIndex === -1) {
+                showToast('Medicine not found!', 'error');
+                return;
+            }
+
+            // Validate required fields
+            const name = document.getElementById('editReturnMedicineName').value.trim();
+            const stock = parseInt(document.getElementById('editReturnStock').value);
+            const price = parseFloat(document.getElementById('editReturnPrice').value);
+            const expiry = document.getElementById('editReturnExpiry').value;
+
+            if (!name || stock < 0 || price < 0 || !expiry) {
+                showToast('Please fill in all required fields with valid values!', 'error');
+                return;
+            }
+
+            // Update the medicine object
+            medicines[medicineIndex] = {
+                ...medicines[medicineIndex],
+                name: name,
+                generic_name: document.getElementById('editReturnGenericName').value.trim(),
+                type: document.getElementById('editReturnType').value,
+                company: document.getElementById('editReturnCompany').value.trim(),
+                stock: stock,
+                price: price,
+                expiry: expiry
+            };
+
+            // Save to localStorage
+            saveAllData();
+
+            // Close modal
+            document.getElementById('editReturnModal').classList.remove('show');
+
+            // Refresh tables and dashboard
+            populateReturnsTable();
+            updateDashboardStats();
+            
+            showToast('Medicine details updated successfully!', 'success');
+        });
+
+        // Modal close handlers for edit modals
+        document.querySelectorAll('#editMedicineModal .modal-close, #editReturnModal .modal-close').forEach(closeBtn => {
+            closeBtn.addEventListener('click', function() {
+                document.getElementById('editMedicineModal').classList.remove('show');
+                document.getElementById('editReturnModal').classList.remove('show');
+            });
+        });
+
+        // Close modals when clicking outside
+        document.getElementById('editMedicineModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.remove('show');
+            }
+        });
+
+        document.getElementById('editReturnModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.remove('show');
+            }
+        });
+
+        // ========== END EDIT FUNCTIONALITY ==========
+
     </script>
 </body>
 </html>
