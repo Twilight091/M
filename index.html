@@ -1374,6 +1374,7 @@
                                         <th>Stock</th>
                                         <th>Price</th>
                                         <th>Expiry</th>
+                                        <th>Batch No</th>
                                         <th>Status</th>
                                     </tr>
                                 </thead>
@@ -1442,6 +1443,7 @@
                                         <th>Stock</th>
                                         <th>Price</th>
                                         <th>Expiry</th>
+                                        <th>Batch No</th>
                                         <th>Status</th>
                                         <th>Actions</th>
                                     </tr>
@@ -1567,6 +1569,12 @@
                                     <div class="form-group">
                                         <label for="expiryDate">Expiry Date *</label>
                                         <input type="date" id="expiryDate" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="batchNo">Batch No (optional)</label>
+                                        <input type="text" id="batchNo" class="form-control" placeholder="Enter batch number">
                                     </div>
                                 </div>
                             </div>
@@ -1712,6 +1720,7 @@
                                         <th>Generic</th>
                                         <th>Type</th>
                                         <th>Company</th>
+                                        <th>Batch No</th>
                                         <th>Stock</th>
                                         <th>Expiry Date</th>
                                         <th>Days Expired</th>
@@ -2386,6 +2395,15 @@
                         </div>
                         <div class="col">
                             <div class="form-group">
+                                <label for="editBatchNo">Batch No (optional)</label>
+                                <input type="text" id="editBatchNo" class="form-control" placeholder="Enter batch number">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
                                 <label for="editStatus">Status</label>
                                 <select id="editStatus" class="form-control">
                                     <option value="Available">Available</option>
@@ -2476,9 +2494,19 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="editReturnExpiry">Expiry Date *</label>
-                        <input type="date" id="editReturnExpiry" class="form-control" required>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="editReturnExpiry">Expiry Date *</label>
+                                <input type="date" id="editReturnExpiry" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="editReturnBatchNo">Batch No (optional)</label>
+                                <input type="text" id="editReturnBatchNo" class="form-control" placeholder="Enter batch number">
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -3496,6 +3524,7 @@
                     <td style="${expired ? 'color: var(--danger); font-weight: bold;' : ''}">
                         ${formatDate(med.expiry)}
                     </td>
+                    <td>${med.batchNo || 'N/A'}</td>
                     <td><span class="badge ${getStatusClass(med.status)}">${expired ? 'Expired' : med.status}</span></td>
                 `;
                 tbody.appendChild(row);
@@ -3559,6 +3588,7 @@
                     <td style="${expired ? 'color: var(--danger); font-weight: bold;' : ''}">
                         ${formatDate(med.expiry)}
                     </td>
+                    <td>${med.batchNo || 'N/A'}</td>
                     <td><span class="badge ${getStatusClass(expired ? 'Expired' : med.status)}">${expired ? 'Expired' : med.status}</span></td>
                     <td>
                         <button class="action-btn edit edit-btn" title="Edit Medicine"><i class="fas fa-edit"></i></button>
@@ -3687,8 +3717,10 @@
                     <td style="${expired ? 'color: var(--danger); font-weight: bold;' : ''}">
                         ${formatDate(med.expiry)}
                     </td>
-                    <td><span class="badge ${getStatusClass(expired ? 'Expired' : med.status)}">${expired ? 'Expired' : med.status}</span></td>
+                    <td>${medicine.batchNo || 'N/A'}</td>
+                    <td><span class="badge ${getStatusClass(expired ? 'Expired' : medicine.status)}">${expired ? 'Expired' : medicine.status}</span></td>
                     <td>
+                        <button class="action-btn edit edit-btn" title="Edit Medicine"><i class="fas fa-edit"></i></button>
                         <button class="action-btn sell sell-btn" title="Sell Medicine"><i class="fas fa-cash-register"></i></button>
                         <button class="action-btn edit" title="Restock"><i class="fas fa-plus"></i></button>
                     </td>
@@ -3780,7 +3812,7 @@
                 companyRow.dataset.company = company;
                 companyRow.innerHTML = `
                     <td colspan="5"><strong>${company}</strong></td>
-                    <td colspan="3" style="text-align: right;">
+                    <td colspan="4" style="text-align: right;">
                         <strong>Total Value: ${formatCurrency(group.totalValue)}</strong>
                     </td>
                 `;
@@ -3800,6 +3832,8 @@
                         <td>${med.name}</td>
                         <td>${med.generic_name}</td>
                         <td>${med.type}</td>
+                        <td>${med.company}</td>
+                        <td>${med.batchNo || 'N/A'}</td>
                         <td style="color: var(--danger); font-weight: bold;">${med.stock} pieces</td>
                         <td style="color: var(--danger);">${formatDate(med.expiry)}</td>
                         <td style="color: var(--danger); font-weight: bold;">${daysExpired} days</td>
@@ -4484,6 +4518,7 @@
                 const strips = parseInt(document.getElementById('strips').value) || 0;
                 const pieces = parseInt(document.getElementById('pieces').value) || 0;
                 const expiry = document.getElementById('expiryDate').value;
+                const batchNo = document.getElementById('batchNo').value.trim();
 
                 const totalPieces = (boxes * stripsPerBox * piecesPerStrip) + 
                                    (strips * piecesPerStrip) + 
@@ -4503,6 +4538,7 @@
                     price: pricePerPiece,
                     stock: totalPieces,
                     expiry,
+                    batchNo: batchNo || null,
                     status: totalPieces > 0 ? 'In Stock' : 'Out of Stock'
                 };
 
@@ -5299,6 +5335,7 @@
             document.getElementById('editStripsPerBox').value = medicine.stripsPerBox || 10;
             document.getElementById('editPiecesPerStrip').value = medicine.piecesPerStrip || 10;
             document.getElementById('editExpiryDate').value = medicine.expiry;
+            document.getElementById('editBatchNo').value = medicine.batchNo || '';
             document.getElementById('editStatus').value = medicine.status || 'Available';
 
             // Show the modal
@@ -5322,6 +5359,7 @@
             document.getElementById('editReturnStock').value = medicine.stock;
             document.getElementById('editReturnPrice').value = medicine.price;
             document.getElementById('editReturnExpiry').value = medicine.expiry;
+            document.getElementById('editReturnBatchNo').value = medicine.batchNo || '';
 
             // Show the modal
             document.getElementById('editReturnModal').classList.add('show');
@@ -5363,6 +5401,7 @@
                 stripsPerBox: parseInt(document.getElementById('editStripsPerBox').value) || 10,
                 piecesPerStrip: parseInt(document.getElementById('editPiecesPerStrip').value) || 10,
                 expiry: expiry,
+                batchNo: document.getElementById('editBatchNo').value.trim() || null,
                 status: document.getElementById('editStatus').value
             };
 
@@ -5410,7 +5449,8 @@
                 company: document.getElementById('editReturnCompany').value.trim(),
                 stock: stock,
                 price: price,
-                expiry: expiry
+                expiry: expiry,
+                batchNo: document.getElementById('editReturnBatchNo').value.trim() || null
             };
 
             // Save to localStorage
