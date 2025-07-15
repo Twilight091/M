@@ -2948,6 +2948,34 @@
             }
         }
 
+        // Update invoice totals and item totals without rebuilding the entire table
+        function updateInvoiceTotals() {
+            // Update individual item totals
+            document.querySelectorAll('.price-input').forEach(input => {
+                const index = parseInt(input.dataset.index);
+                const row = input.closest('tr');
+                const totalCell = row.querySelector('td:nth-child(5)'); // Total column
+                if (currentInvoiceItems[index]) {
+                    totalCell.textContent = formatCurrency(currentInvoiceItems[index].total);
+                }
+            });
+
+            // Calculate and update subtotal, discount, and total
+            const subtotal = currentInvoiceItems.reduce((sum, item) => sum + item.total, 0);
+            const discount = parseFloat(document.getElementById('discount').value) || 0;
+            const discountType = document.getElementById('discountType').value;
+
+            let discountAmount = discount;
+            if (discountType === 'percent') {
+                discountAmount = subtotal * (discount / 100);
+            }
+
+            const total = subtotal - discountAmount;
+
+            document.getElementById('subtotalAmount').textContent = formatCurrency(subtotal);
+            document.getElementById('totalAmount').textContent = formatCurrency(total);
+        }
+
         // Update the invoice items table
         function updateInvoiceItemsTable() {            const tbody = document.querySelector('#invoiceItemsTable tbody');
             tbody.innerHTML = '';
@@ -2963,7 +2991,11 @@
                             <option value="box" ${item.unit === 'box' ? 'selected' : ''}>Box</option>
                         </select>
                     </td>
-                    <td>${formatCurrency(item.price)}</td>
+                    <td>
+                        <input type="number" class="form-control price-input" 
+                               min="0" value="${item.price}" step="0.01"
+                               data-index="${index}" style="width: 100px;">
+                    </td>
                     <td>
                         <input type="number" class="form-control quantity-input" 
                                min="1" value="${item.quantity}" 
@@ -2981,12 +3013,23 @@
 
             // Add event listeners to quantity inputs
             document.querySelectorAll('.quantity-input').forEach(input => {
-                input.addEventListener('change', function() {
+                input.addEventListener('input', function() {
                     const index = parseInt(this.dataset.index);
                     const newQuantity = parseInt(this.value) || 1;
                     currentInvoiceItems[index].quantity = newQuantity;
                     currentInvoiceItems[index].total = currentInvoiceItems[index].price * newQuantity;
-                    updateInvoiceItemsTable();
+                    updateInvoiceTotals(); // Use the optimized function for real-time updates
+                });
+            });
+
+            // Add event listeners to price inputs
+            document.querySelectorAll('.price-input').forEach(input => {
+                input.addEventListener('input', function() {
+                    const index = parseInt(this.dataset.index);
+                    const newPrice = parseFloat(this.value) || 0;
+                    currentInvoiceItems[index].price = newPrice;
+                    currentInvoiceItems[index].total = newPrice * currentInvoiceItems[index].quantity;
+                    updateInvoiceTotals(); // Update totals without rebuilding the entire table
                 });
             });
 
@@ -4121,6 +4164,9 @@
             document.getElementById('timezone').value = settings.timezone;
             document.getElementById('expiryThreshold').value = settings.expiryThreshold;
             document.getElementById('lowStock').value = settings.lowStock;
+            
+            // Setup discount listeners for real-time updates
+            setupDiscountListeners();
 
             // Navigation
             const navLinks = document.querySelectorAll('.nav-link');
@@ -4493,6 +4539,28 @@
                 showToast('Data synchronized successfully', 'success');
             });
 
+            // Setup discount listeners for real-time updates
+            function setupDiscountListeners() {
+                // Remove existing listeners to prevent duplicates
+                const discountInput = document.getElementById('discount');
+                const discountTypeSelect = document.getElementById('discountType');
+                
+                // Clone and replace to remove all existing event listeners
+                const newDiscountInput = discountInput.cloneNode(true);
+                const newDiscountTypeSelect = discountTypeSelect.cloneNode(true);
+                discountInput.parentNode.replaceChild(newDiscountInput, discountInput);
+                discountTypeSelect.parentNode.replaceChild(newDiscountTypeSelect, discountTypeSelect);
+                
+                // Add new event listeners for real-time updates
+                document.getElementById('discount').addEventListener('input', function() {
+                    updateInvoiceTotals();
+                });
+                
+                document.getElementById('discountType').addEventListener('change', function() {
+                    updateInvoiceTotals();
+                });
+            }
+
             // Create Invoice button
             document.getElementById('createInvoice').addEventListener('click', function() {
                 document.getElementById('invoiceForm').reset();
@@ -4500,6 +4568,9 @@
                 updateInvoiceItemsTable();
                 document.getElementById('invoiceDate').valueAsDate = new Date();
                 document.getElementById('createInvoiceModal').classList.add('show');
+                
+                // Setup real-time discount calculation listeners
+                setupDiscountListeners();
             });
 
             // Save Invoice button
